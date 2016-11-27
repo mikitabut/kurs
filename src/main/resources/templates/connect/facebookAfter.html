@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+</head>
+<body ng-app="example">
+<div class="container" ng-controller="ApiController">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form method="post" thonload="var user; user.email" ng-submit="addUser()">
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    var user;
+                    user.email=/*[[${Email}]]*/;
+                    /*]]>*/
+                </script>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter Password"
+                           maxlength="255" minlength="8" ng-model="user.password" />
+                </div>
+                <button type="submit" class="btn btn-default" >Set password</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
+<script type="text/javascript" src="../js/appi.js" th:href="@{js/appi.js}"></script>
+</body>
+
+</html>

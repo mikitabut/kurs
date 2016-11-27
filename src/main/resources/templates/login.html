@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/lg.css" />
+</head>
+<body>
+
+
+<div class="container">
+    <div class="row">
+        <form class="form-signin mg-btm"  th:action="@{/login}" method="post">
+            <div th:if="${param.error}">
+                <h4 style="color:red">Username or Password is wrong. Please check again</h4>
+
+            </div>
+
+                <h4 th:if="${param.logout}" style="color:blue" class="heading-desc">Logged out.</h4>
+
+            <h3 class="heading-desc">
+                Login to BackSite</h3>
+            <div class="social-box">
+                <div class="row mg-btm">
+                    <div class="col-md-12">
+                        <a href="/connect/facebook" class="btn btn-primary btn-block">
+                            <i class="icon-facebook"></i>    Login with Facebook
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="/connect/twitter" class="btn btn-info btn-block" >
+                            <i class="icon-twitter"></i>    Login with Twitter
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="main">
+
+                <input type="text" class="form-control" placeholder="Email" name="username"  autofocus="true" />
+                <input type="password" class="form-control" placeholder="Password" name="password" />
+                <span class="clearfix"></span>
+            </div>
+            <div class="login-footer">
+                <div class="row">
+                    <div class="col-xs-6 col-md-6">
+                        <div class="left-section">
+                            <a href="/register">Register now</a>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-md-6 pull-right">
+                        <button type="submit" class="btn btn-large btn-danger pull-right">Login</button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
