@@ -1,6 +1,6 @@
 'use strict';
 
-var App = angular.module('example', [angularDragula(angular)]);
+var App = angular.module('example', []);
 
 App.controller('ApiController', function ($scope, $http) {
 
@@ -42,11 +42,18 @@ App.controller('ApiController', function ($scope, $http) {
     $scope.chaptersGetById=function(creative) {
         var s=location.href;
         var id=s.substr(s.lastIndexOf("/")+1);
+
         $http.get('/api/chapter/getByCreativeId', {params: {creativeId: creative.id}}).success(function (data) {
             creative.chapters = data;
         });
     };
-
+    $scope.loadCreatives=function(creative,count) {
+        if(creative===undefined)
+            return;
+        $http.get('/api/creative/getByCreativeId', {params: {creativeId: creative.id,count:count}}).success(function (data) {
+            $scope.creatives=data;
+        });
+    };
 
 });
 App.controller('UserController', function ($scope) {
@@ -58,4 +65,10 @@ App.controller('UserController', function ($scope) {
 });
 App.controller('ChaptersController', function ($scope) {
     $scope.chaptersGetById($scope.creative);
+});
+
+App.controller('FeedController', function ($scope) {
+    $scope.creative={};
+    $scope.creative.id=-1;
+    $scope.loadCreatives($scope.creative,10);
 });

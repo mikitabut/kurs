@@ -7,13 +7,19 @@
 <div class="container" ng-controller="ApiController">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <form method="post" thonload="var user; user.email" ng-submit="addUser()">
-                <script th:inline="javascript">
-                    /*<![CDATA[*/
-                    var user;
-                    user.email=/*[[${Email}]]*/;
-                    /*]]>*/
-                </script>
+            <form method="post" ng-submit="addUser()">
+                <div class="form-group" ng-show="false">
+                    <input type="email" id="email"
+                           ng-model="user.email" th:value="${Email}" />
+                </div>
+                <div class="form-group" ng-show="false">
+                    <input type="email" id="firstName"
+                           ng-model="user.firstName" th:value="${FirstName}" />
+                </div>
+                <div class="form-group" ng-show="false">
+                    <input type="email" id="lastName"
+                           ng-model="user.lastName" th:value="${LastName}" />
+                </div>
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" placeholder="Enter Password"

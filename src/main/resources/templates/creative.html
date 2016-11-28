@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.9/angular-sanitize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-dragula/1.2.8/angular-dragula.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-showdown/1.1.0/ng-showdown.js"></script>
+    <script type="text/javascript" src="../js/appi.js" th:href="@{js/appi.js}"></script>
+</head>
+<body ng-app="example">
+<div class="container" ng-controller="ApiController">
+    <div th:switch="${who}">
+        <p th:case="${pageUser}">
+            <button class="btn btn-large btn-danger pull-right" th:disabled="${nextpage}">
+                Add new creative
+            </button>
+        </p>
+        <p th:case="'ROLE_ADMIN'">
+            <button class="btn btn-large btn-danger pull-right" th:onclick="${nextpage}">
+                Add new creative from this user
+            </button>
+        </p>
+    </div>
+    <div class="wrapper">
+        <div class="container ng-isolate-scope" dragula="'first-bag'">
+            <div>You can move these elements between these two containers</div>
+            <div>Moving them anywhere else isn't quite possible</div>
+            <div>There's also the possibility of moving elements around in the same container, changing their position</div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+
+</html>
+

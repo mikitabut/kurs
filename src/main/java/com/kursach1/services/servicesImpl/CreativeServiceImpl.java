@@ -20,4 +20,14 @@ public class CreativeServiceImpl implements CreativeService {
     public Collection<Creative> getByUserId(Integer userId) {
         return creativeDao.getByUserId(userId);
     }
+
+    @Override
+    public Collection<Creative> getByCreativeId(Integer creativeId, Integer count) {
+        return creativeDao.getByCreativeId(creativeId,count);
+    }
+
+    @Override
+    public Creative getCreativeById(Integer creativeId) {
+        return creativeDao.getCreativeById(creativeId);
+    }
 }

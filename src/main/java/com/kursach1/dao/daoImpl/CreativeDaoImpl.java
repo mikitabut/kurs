@@ -21,4 +21,26 @@ public class CreativeDaoImpl implements CreativeDao {
         List<Creative> resultList = entityManager.createQuery("from Creative where user_id="+userId, Creative.class).getResultList();
         return resultList;
     }
+
+    @Override
+    public Collection<Creative> getByCreativeId(Integer creativeId, Integer count) {
+        List<Creative> resultList;
+        if(creativeId==-1) {
+             resultList= entityManager.createQuery("from Creative ORDER By date DESC", Creative.class)
+                     .setMaxResults(count)
+                     .getResultList();
+        }
+        else {
+            resultList = entityManager.createQuery("from Creative ORDER By date DESC", Creative.class)
+                    .setFirstResult(creativeId)
+                    .setMaxResults(count)
+                    .getResultList();
+        }
+        return resultList;
+    }
+
+    @Override
+    public Creative getCreativeById(Integer creativeId) {
+        return entityManager.find(Creative.class,creativeId);
+    }
 }

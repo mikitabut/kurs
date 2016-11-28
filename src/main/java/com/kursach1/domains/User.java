@@ -31,14 +31,13 @@ public class User {
     @JsonProperty
     private String password;
 
-    @Column(name="email")
+    @Column(name="userName")
     @JsonProperty
     private String email;
 
     @Column(name="enabled")
     @JsonProperty
     private Integer enabled;
-
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER)
     private Set<Creative> creatives;
@@ -99,4 +98,6 @@ public class User {
     public void setEnabled(Integer enabled) {
         this.enabled = enabled;
     }
+
+
 }

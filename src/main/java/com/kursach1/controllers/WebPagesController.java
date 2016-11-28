@@ -1,13 +1,10 @@
 package com.kursach1.controllers;
 
+import com.kursach1.services.CreativeService;
 import com.kursach1.services.UserService;
-import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.social.connect.ConnectionRepository;
-import org.springframework.social.facebook.api.Facebook;
-import org.springframework.social.facebook.api.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +23,7 @@ public class WebPagesController {
     }
 
     @RequestMapping(value={"/register"})
-    public ModelAndView register(HttpResponse httpResponse){
+    public ModelAndView register(){
         return new ModelAndView("register");
     }
 
@@ -51,28 +48,17 @@ public class WebPagesController {
         return new ModelAndView("users");
     }
 
-    private Facebook facebook;
-    private ConnectionRepository connectionRepository;
-
-    public WebPagesController(Facebook facebook, ConnectionRepository connectionRepository) {
-        this.facebook = facebook;
-        this.connectionRepository = connectionRepository;
-    }
 
     @RequestMapping(value="/facebookAfter")
     public ModelAndView facebookAfter(Model model){
-        String [] fields = { "email",  "first_name", "last_name" };
-        User userProfile = facebook.fetchObject("me", User.class, fields);
-        model.addAttribute("Email", userProfile.getFirstName()+"@"+userProfile.getLastName());
-        model.addAttribute("FirstName", userProfile.getFirstName());
-        model.addAttribute("LastName", userProfile.getLastName());
+
 
         return new ModelAndView("connect/facebookAfter");
     }
 
     @Autowired
     UserService userService;
-    @Autowired
+
 
     @RequestMapping(value="/user/{id}")
     public ModelAndView User(@PathVariable int id, Model model, Principal principal){
@@ -89,10 +75,24 @@ public class WebPagesController {
         return new ModelAndView("user");
     }
 
-    @RequestMapping(value="/user/{id}/creative/{crid}")
-    public ModelAndView createCreative(@PathVariable int id, Model model, Principal principal){
 
-        return new ModelAndView("changeCreative");
+    @Autowired
+    CreativeService creativeService;
+
+    @RequestMapping(value="/creative/{creativeId}")
+    public ModelAndView creative(@PathVariable int creativeId, Model model, Principal principal){
+        Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+
+        if(authorities.toArray()[0].toString().equals("ROLE_ADMIN"))
+            model.addAttribute("who",authorities.toArray()[0].toString());
+        else
+            model.addAttribute("who",principal.getName());
+        com.kursach1.domains.User user = userService.getById(creativeService.getCreativeById(creativeId).getUser().getId());
+        String email = user.getEmail();
+        model.addAttribute("pageUser",email);
+        model.addAttribute("disabled","false");
+
+        return new ModelAndView("creative");
     }
 
 }

@@ -20,4 +20,12 @@ public class CreativeController {
     public Collection<Creative> getById(@RequestParam Integer userId) {
         return creativeService.getByUserId(userId);
     }
+    @RequestMapping(value = "/getByCreativeId",method = RequestMethod.GET)
+    public Collection<Creative> getByCreativeId(@RequestParam Integer count,@RequestParam Integer creativeId) {
+        return creativeService.getByCreativeId(creativeId,count);
+    }
+    @RequestMapping(value = "/getCreativeById",method = RequestMethod.GET)
+    public Creative getCreativeById(@RequestParam Integer creativeId) {
+        return creativeService.getCreativeById(creativeId);
+    }
 }
