@@ -72,6 +72,7 @@ public class WebPagesController {
 
     @Autowired
     UserService userService;
+    @Autowired
 
     @RequestMapping(value="/user/{id}")
     public ModelAndView User(@PathVariable int id, Model model, Principal principal){
@@ -84,8 +85,14 @@ public class WebPagesController {
         com.kursach1.domains.User user = userService.getById(id);
         String email = user.getEmail();
         model.addAttribute("pageUser",email);
-        model.addAttribute("nextpage","/user/"+id+"/createCreative");
+        model.addAttribute("nextpage","/user/"+id+"/creative");
         return new ModelAndView("user");
+    }
+
+    @RequestMapping(value="/user/{id}/creative/{crid}")
+    public ModelAndView createCreative(@PathVariable int id, Model model, Principal principal){
+
+        return new ModelAndView("changeCreative");
     }
 
 }

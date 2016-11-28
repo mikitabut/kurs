@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.Calendar;
+import java.util.Set;
 
 /**
  * @author Vlad Fefelov
@@ -18,11 +20,20 @@ public class Creative {
     @JsonProperty
     private Integer id;
 
+    @Column(name = "name")
+    @JsonProperty
+    private String name;
+
+    @Column
+    @JsonProperty
+    private Calendar date;
+
     @Column(name = "mark")
     @JsonProperty
     private float mark;
 
-
+    @OneToMany(mappedBy = "creative", cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    private Set<Chapter> chapters;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
@@ -52,5 +63,29 @@ public class Creative {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Calendar getDate() {
+        return date;
+    }
+
+    public void setDate(Calendar date) {
+        this.date = date;
+    }
+
+    public Set<Chapter> getChapters() {
+        return chapters;
+    }
+
+    public void setChapters(Set<Chapter> chapters) {
+        this.chapters = chapters;
     }
 }
